@@ -124,7 +124,7 @@
                 description: 'A veteran in the market research industry, specializing in high-paying, in-person focus groups in cities across the United States.',
                 studyTypes: ['In-person Focus Groups', 'Phone Interviews', 'Online Interviews'],
                 payoutMethods: ['Visa Gift Card', 'Check'],
-                availability: ['US (major cities)']
+                availability: ['US']
             },
             {
                 id: 5,
@@ -163,7 +163,7 @@
                 description: 'An app-based platform that connects you with brands for quick feedback sessions and product testing, often through short text chats.',
                 studyTypes: ['App-based Feedback', 'Brand Chats', 'Product Testing'],
                 payoutMethods: ['Gift Cards'],
-                availability: ['Global (App-based)']
+                availability: ['Global']
             },
             {
                 id: 8,
@@ -176,7 +176,7 @@
                 description: 'An expert network that connects professionals with companies for paid consultations. Pay is based on your professional experience and knowledge.',
                 studyTypes: ['Expert Consultations', 'Professional Surveys'],
                 payoutMethods: ['Direct Deposit'],
-                availability: ['Global (Professionals)']
+                availability: ['Global']
             },
             {
                 id: 9,
@@ -380,9 +380,13 @@
                 setFilters(prev => ({ ...prev, sortBy: e.target.value }));
             };
 
+            const handleAvailabilityChange = (e) => {
+                setFilters(prev => ({ ...prev, availability: e.target.value }));
+            };
+
             return (
                 <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-4 mb-8 backdrop-blur-sm lg:sticky top-4 z-20">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div className="flex flex-col gap-2">
                             <label htmlFor="search" className="text-sm font-medium text-gray-300">Search by Name</label>
                             <input
@@ -393,6 +397,22 @@
                                 onChange={handleSearchChange}
                                 className="bg-gray-800 border border-gray-700 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                             />
+                        </div>
+                        <div className="flex flex-col gap-2">
+                            <label htmlFor="availability" className="text-sm font-medium text-gray-300">Availability</label>
+                             <select
+                                id="availability"
+                                value={filters.availability}
+                                onChange={handleAvailabilityChange}
+                                className="bg-gray-800 border border-gray-700 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                            >
+                                <option value="All">All Regions</option>
+                                <option value="Global">Global</option>
+                                <option value="US">US</option>
+                                <option value="UK">UK</option>
+                                <option value="Canada">Canada</option>
+                                <option value="Europe">Europe</option>
+                            </select>
                         </div>
                         <div className="flex flex-col gap-2">
                             <label htmlFor="sort" className="text-sm font-medium text-gray-300">Sort By</label>
@@ -418,12 +438,17 @@
             const [filters, setFilters] = useState({
                 sortBy: 'rating_desc',
                 searchTerm: '',
+                availability: 'All',
             });
 
             const filteredAndSortedPlatforms = useMemo(() => {
                 let filtered = platformData.filter(p => 
                     p.name.toLowerCase().includes(filters.searchTerm.toLowerCase())
                 );
+
+                if (filters.availability !== 'All') {
+                    filtered = filtered.filter(p => p.availability.includes(filters.availability) || p.availability.includes('Global'));
+                }
 
                 return filtered.sort((a, b) => {
                     switch (filters.sortBy) {

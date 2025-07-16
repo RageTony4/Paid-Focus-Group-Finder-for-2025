@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paid Focus Group Finder for 2025</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        :root {
+            --glow-color: hsl(140, 100%, 70%); /* A green glow for money */
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #030712; /* bg-gray-950 */
+            color: #f9fafb; /* text-gray-50 */
+        }
+        .glowing-btn {
+            position: relative;
+            color: var(--glow-color);
+            cursor: pointer;
+            padding: 0.5em 1.2em;
+            border: 0.1em solid var(--glow-color);
+            border-radius: 0.45em;
+            background: none;
+            perspective: 2em;
+            font-family: "Inter", sans-serif;
+            font-size: 0.9em;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            -webkit-box-shadow: inset 0px 0px 0.5em 0px var(--glow-color),
+                0px 0px 0.5em 0px var(--glow-color);
+            -moz-box-shadow: inset 0px 0px 0.5em 0px var(--glow-color),
+                0px 0px 0.5em 0px var(--glow-color);
+            box-shadow: inset 0px 0px 0.5em 0px var(--glow-color),
+                0px 0px 0.5em 0px var(--glow-color);
+            transition: all 0.3s ease;
+        }
+        .glowing-btn:hover {
+            color: #030712;
+            background-color: var(--glow-color);
+            -webkit-box-shadow: 0px 0px 1em 0px var(--glow-color);
+            -moz-box-shadow: 0px 0px 1em 0px var(--glow-color);
+            box-shadow: 0px 0px 1em 0px var(--glow-color);
+        }
+        .details-container {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out, padding-top 0.5s ease-in-out;
+        }
+        .details-container.open {
+            max-height: 500px; /* Adjust as needed to fit content */
+            padding-top: 1.5rem; /* Equivalent to mt-6 */
+        }
+        .glowing-number {
+            color: #fff;
+            text-shadow:
+                0 0 5px #fff,
+                0 0 10px #fff,
+                0 0 20px var(--glow-color),
+                0 0 30px var(--glow-color),
+                0 0 40px var(--glow-color);
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useMemo } = React;
+
+        // --- Data for the focus group platforms ---
+        const platformData = [
+            {
+                id: 1,
+                name: 'User Interviews',
+                link: 'https://www.userinterviews.com/',
+                payRate: '$50 - $200+/hr',
+                rating: 4.5,
+                pros: ['Very high pay rates', 'Huge variety of interesting studies', 'Excellent platform and support', 'Remote and in-person options'],
+                cons: ['Can be very competitive to get selected', 'Requires filling out screener surveys'],
+                description: 'A top-tier platform for high-quality market research studies. Connects researchers with consumers and professionals for interviews, focus groups, and usability tests.',
+                studyTypes: ['1-on-1 Interviews', 'Focus Groups', 'Multi-day Studies', 'Unmoderated Tasks'],
+                payoutMethods: ['PayPal', 'Gift Cards'],
+                availability: ['US', 'Canada', 'UK', 'Australia', 'France', 'Germany', 'South Africa']
+            },
+            {
+                id: 2,
+                name: 'Respondent',
+                link: 'https://www.respondent.io/',
+                payRate: '$100 - $400+/hr',
+                rating: 4.2,
+                pros: ['Industry-leading pay, especially for professionals', 'High-quality professional studies', 'Clean and easy-to-use platform'],
+                cons: ['Primarily targets industry professionals', 'Extremely competitive to land studies'],
+                description: 'A premium platform focused on connecting researchers with industry professionals for high-paying, one-on-one remote research interviews.',
+                studyTypes: ['1-on-1 Interviews', 'Unmoderated Tasks'],
+                payoutMethods: ['PayPal'],
+                availability: ['Global']
+            },
+            {
+                id: 3,
+                name: 'Prolific',
+                link: 'https://www.prolific.com/',
+                payRate: '$8 - $15/hr',
+                rating: 4.7,
+                pros: ['Extremely trustworthy and reliable', 'Consistent stream of studies', 'You are never screened out mid-study', 'Instant PayPal cashouts'],
+                cons: ['Pay is lower than dedicated focus groups', 'More academic research than consumer feedback'],
+                description: 'A highly respected platform for academic research. While not traditional focus groups, it offers a constant supply of well-paid, interesting studies with fair treatment of participants.',
+                studyTypes: ['Academic Surveys', 'Short Tasks', 'Longitudinal Studies'],
+                payoutMethods: ['PayPal'],
+                availability: ['Most OECD Countries']
+            },
+            {
+                id: 4,
+                name: 'Fieldwork',
+                link: 'https://www.fieldwork.com/',
+                payRate: '$75 - $200+ per study',
+                rating: 4.3,
+                pros: ['Long-standing and very reputable company', 'High-paying in-person studies', 'Professional facilities and staff'],
+                cons: ['In-person studies are limited to major US cities', 'Fewer remote opportunities than other sites'],
+                description: 'A veteran in the market research industry, specializing in high-paying, in-person focus groups in cities across the United States.',
+                studyTypes: ['In-person Focus Groups', 'Phone Interviews', 'Online Interviews'],
+                payoutMethods: ['Visa Gift Card', 'Check'],
+                availability: ['US (major cities)']
+            },
+            {
+                id: 5,
+                name: 'Rare Patient Voice (RPV)',
+                link: 'https://rarepatientvoice.com/',
+                payRate: '$100 - $120/hr',
+                rating: 4.6,
+                pros: ['Excellent pay for your time', 'Contribute to important medical research', 'Very respectful of patients and caregivers'],
+                cons: ['Requires a diagnosed medical condition', 'Payout is via check, which is slower'],
+                description: 'A specialized platform connecting patients and caregivers with medical researchers for vital studies. Offers high compensation for sharing your experience.',
+                studyTypes: ['Medical Interviews', 'Surveys for Patients'],
+                payoutMethods: ['Check'],
+                availability: ['US', 'Canada', 'UK', 'France', 'Germany', 'Italy', 'Spain', 'Australia', 'New Zealand']
+            },
+            {
+                id: 6,
+                name: 'Wynter',
+                link: 'https://wynter.com/join-panel',
+                payRate: '$10 - $100 per test',
+                rating: 4.0,
+                pros: ['Great pay for very short tasks (10-20 min)', 'Niche focus on B2B feedback', 'Contribute to real product messaging'],
+                cons: ['Studies are less frequent', 'Very niche (B2B professionals)'],
+                description: 'A unique platform focused on B2B messaging and copy testing. Get paid well for providing quick feedback on websites and marketing materials.',
+                studyTypes: ['Messaging Tests', 'Copy Feedback', 'B2B Surveys'],
+                payoutMethods: ['PayPal'],
+                availability: ['US', 'Canada', 'UK', 'Europe']
+            },
+            {
+                id: 7,
+                name: 'Lightster',
+                link: 'https://www.lightster.co/',
+                payRate: 'Varies (Gift Cards)',
+                rating: 3.9,
+                pros: ['Modern app-based interface', 'Directly chat with brands and founders', 'Get early access to new products'],
+                cons: ['Payouts are often in gift cards, not cash', 'Newer platform, still growing'],
+                description: 'An app-based platform that connects you with brands for quick feedback sessions and product testing, often through short text chats.',
+                studyTypes: ['App-based Feedback', 'Brand Chats', 'Product Testing'],
+                payoutMethods: ['Gift Cards'],
+                availability: ['Global (App-based)']
+            },
+            {
+                id: 8,
+                name: 'Maven',
+                link: 'https://maven.co/',
+                payRate: 'Varies (High Potential)',
+                rating: 4.1,
+                pros: ['Potential for very high pay based on expertise', 'Connect with top companies', 'Flexible micro-consulting'],
+                cons: ['Requires specific professional expertise', 'Not for general audiences or casual users'],
+                description: 'An expert network that connects professionals with companies for paid consultations. Pay is based on your professional experience and knowledge.',
+                studyTypes: ['Expert Consultations', 'Professional Surveys'],
+                payoutMethods: ['Direct Deposit'],
+                availability: ['Global (Professionals)']
+            },
+            {
+                id: 9,
+                name: 'Survey Junkie',
+                link: 'https://www.surveyjunkie.com/focus-groups',
+                payRate: '$25 - $150 per study',
+                rating: 4.5,
+                pros: ['Very reputable company', 'Can lead to high-paying studies', 'Trustworthy platform'],
+                cons: ['Focus groups are less common than surveys', 'Need to be an active survey taker'],
+                description: 'While primarily a survey site, active members are often invited to participate in higher-paying studies like phone interviews and focus groups.',
+                studyTypes: ['Surveys', 'Phone Interviews', 'Product Testing'],
+                payoutMethods: ['PayPal', 'Bank Transfer', 'Gift Cards'],
+                availability: ['US', 'Canada', 'Australia']
+            },
+            {
+                id: 10,
+                name: 'Ipsos i-Say',
+                link: 'https://www.ipsosisay.com/',
+                payRate: '$50 - $100 per study',
+                rating: 4.2,
+                pros: ['Owned by a massive research company', 'Trustworthy and reliable payouts', 'Global presence'],
+                cons: ['Focus group invites are rare', 'Primarily a survey panel'],
+                description: 'The survey panel for one of the world\'s largest market research firms. Active members may get invites to more in-depth studies.',
+                studyTypes: ['Surveys', 'Online Communities', 'Product Testing'],
+                payoutMethods: ['PayPal', 'Gift Cards'],
+                availability: ['Global']
+            },
+            {
+                id: 11,
+                name: 'FF Focus Group',
+                link: 'https://fffocusgroup.com/',
+                payRate: '$50 - $250 per study',
+                rating: 4.0,
+                pros: ['High-paying opportunities', 'Wide range of topics', 'Legitimate research firm'],
+                cons: ['Website is a bit dated', 'Requires signing up for their panel'],
+                description: 'A dedicated panel for recruiting participants for a wide variety of high-paying online and in-person focus groups.',
+                studyTypes: ['Focus Groups', 'Taste Tests', 'Shop-Alongs'],
+                payoutMethods: ['Check', 'Gift Cards'],
+                availability: ['US']
+            },
+            {
+                id: 12,
+                name: 'Focus Group by Sago',
+                link: 'https://www.sago.com/panels/',
+                payRate: '$75 - $300 per study',
+                rating: 4.4,
+                pros: ['Major industry leader', 'Very high-quality, professional studies', 'Excellent pay rates'],
+                cons: ['Can be competitive', 'In-person studies limited to their locations'],
+                description: 'A top-tier market research company (formerly Schlesinger Group) that conducts premium focus groups both online and in-person.',
+                studyTypes: ['Focus Groups', 'Medical Research', 'Business Interviews'],
+                payoutMethods: ['PayPal', 'Check', 'Gift Cards'],
+                availability: ['US', 'UK', 'Europe']
+            },
+            {
+                id: 13,
+                name: 'Focus Insite',
+                link: 'https://focusinsite.com/',
+                payRate: '$50 - $200 per study',
+                rating: 4.1,
+                pros: ['Recruits for a wide variety of studies', 'Good communication with participants', 'Reliable payouts'],
+                cons: ['Mainly US-focused', 'Website can be clunky'],
+                description: 'A US-based recruitment firm that connects participants with researchers for paid focus groups, interviews, and product tests.',
+                studyTypes: ['Focus Groups', 'Product Testing', 'Medical Interviews'],
+                payoutMethods: ['Check', 'Gift Cards'],
+                availability: ['US']
+            },
+            {
+                id: 14,
+                name: 'SIS International',
+                link: 'https://www.sisinternational.com/research-participants/',
+                payRate: '$50 - $500 per study',
+                rating: 4.2,
+                pros: ['Global opportunities', 'High pay for professional/B2B studies', 'Very diverse range of topics'],
+                cons: ['Higher-paying studies are very niche', 'Can be hard to qualify'],
+                description: 'A global market research firm that conducts a wide range of studies, including well-compensated focus groups for consumers and professionals.',
+                studyTypes: ['Focus Groups', 'B2B Research', 'Consumer Interviews'],
+                payoutMethods: ['PayPal', 'Check', 'Gift Cards'],
+                availability: ['Global']
+            },
+            {
+                id: 15,
+                name: 'Probe Market Research',
+                link: 'https://www.probemarketresearch.com/participate-in-a-study/',
+                payRate: '$50 - $400 per study',
+                rating: 4.0,
+                pros: ['Reputable company with a long history', 'Good variety of study types', 'Clear communication'],
+                cons: ['Website is outdated', 'Primarily recruits in the US'],
+                description: 'A well-established market research company that recruits for various paid studies, including online focus groups and interviews.',
+                studyTypes: ['Focus Groups', 'Interviews', 'Taste Tests'],
+                payoutMethods: ['Check', 'Gift Cards'],
+                availability: ['US']
+            },
+            {
+                id: 16,
+                name: 'FocusGroups.org',
+                link: 'https://www.focusgroups.org/',
+                payRate: 'Varies',
+                rating: 3.8,
+                pros: ['Aggregates studies from many companies', 'Large list of opportunities', 'Easy to browse many options at once'],
+                cons: ['Not a direct recruiter', 'Quality of listings can vary', 'You have to sign up for each study individually'],
+                description: 'A popular aggregator/job board that lists focus group opportunities from many different market research companies across the US.',
+                studyTypes: ['Aggregator'],
+                payoutMethods: ['Varies by study'],
+                availability: ['US']
+            }
+        ];
+
+        // --- SVG Icons ---
+        const StarIcon = ({ className }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}>
+                <path fillRule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.007z" clipRule="evenodd" />
+            </svg>
+        );
+
+        const CheckIcon = ({ className }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className={className}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+        );
+
+        const XCircleIcon = ({ className }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className={className}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+        );
+
+        // --- Platform Card Component ---
+        function PlatformCard({ platform }) {
+            const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+
+            return (
+                <div className="bg-gray-900 border border-gray-700/50 rounded-xl p-6 transition-all duration-300 flex flex-col">
+                    {/* Base content of the card */}
+                    <div className="flex-grow">
+                        <div className="flex justify-between items-start">
+                            <h2 className="text-xl sm:text-2xl font-bold text-white">{platform.name}</h2>
+                            <div className="flex items-center gap-1 bg-gray-800 px-3 py-1 rounded-full flex-shrink-0">
+                                <StarIcon className="w-5 h-5 text-yellow-400" />
+                                <span className="font-bold text-white">{platform.rating.toFixed(1)}</span>
+                            </div>
+                        </div>
+                        <p className="text-gray-300 mt-2 text-md font-semibold">{platform.payRate}</p>
+                        <p className="text-gray-400 mt-1 text-sm">Study Types: {platform.studyTypes.join(', ')}</p>
+                        <p className="text-gray-400 mt-1 text-sm">Available in: {platform.availability.join(', ')}</p>
+                    </div>
+
+                    <div className="mt-6 flex flex-wrap items-center gap-4">
+                         <a href={platform.link} target="_blank" rel="noopener noreferrer" className="inline-block">
+                             <button className="glowing-btn">
+                                VISIT SITE
+                             </button>
+                         </a>
+                         <button 
+                            onClick={() => setIsPreviewOpen(!isPreviewOpen)} 
+                            className="glowing-btn" 
+                            style={{"--glow-color": "hsl(280, 100%, 75%)"}}>
+                            {isPreviewOpen ? 'HIDE' : 'DETAILS'}
+                         </button>
+                    </div>
+                    
+                    {/* The expanding/collapsing details container */}
+                    <div className={`details-container ${isPreviewOpen ? 'open' : ''}`}>
+                        <h3 className="text-lg font-semibold text-white mb-2">Overview</h3>
+                        <p className="text-gray-300 mb-4 text-sm">{platform.description}</p>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <h4 className="font-semibold text-green-400 mb-2">Pros</h4>
+                                <ul className="space-y-1">
+                                    {platform.pros.map((pro, i) => (
+                                        <li key={i} className="flex items-start gap-2 text-sm text-gray-300">
+                                            <CheckIcon className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                                            <span>{pro}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                             <div>
+                                <h4 className="font-semibold text-red-400 mb-2">Cons</h4>
+                                <ul className="space-y-1">
+                                    {platform.cons.map((con, i) => (
+                                        <li key={i} className="flex items-start gap-2 text-sm text-gray-300">
+                                            <XCircleIcon className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
+                                            <span>{con}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        // --- Filters Component ---
+        function Filters({ filters, setFilters }) {
+            const handleSearchChange = (e) => {
+                setFilters(prev => ({ ...prev, searchTerm: e.target.value }));
+            };
+            
+            const handleSortChange = (e) => {
+                setFilters(prev => ({ ...prev, sortBy: e.target.value }));
+            };
+
+            return (
+                <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-4 mb-8 backdrop-blur-sm lg:sticky top-4 z-20">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="flex flex-col gap-2">
+                            <label htmlFor="search" className="text-sm font-medium text-gray-300">Search by Name</label>
+                            <input
+                                type="text"
+                                id="search"
+                                placeholder="e.g., User Interviews"
+                                value={filters.searchTerm}
+                                onChange={handleSearchChange}
+                                className="bg-gray-800 border border-gray-700 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                            />
+                        </div>
+                        <div className="flex flex-col gap-2">
+                            <label htmlFor="sort" className="text-sm font-medium text-gray-300">Sort By</label>
+                            <select
+                                id="sort"
+                                value={filters.sortBy}
+                                onChange={handleSortChange}
+                                className="bg-gray-800 border border-gray-700 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                            >
+                                <option value="rating_desc">Rating: High to Low</option>
+                                <option value="rating_asc">Rating: Low to High</option>
+                                <option value="name_asc">Name: A to Z</option>
+                                <option value="name_desc">Name: Z to A</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        // --- Main App Component ---
+        function App() {
+            const [filters, setFilters] = useState({
+                sortBy: 'rating_desc',
+                searchTerm: '',
+            });
+
+            const filteredAndSortedPlatforms = useMemo(() => {
+                let filtered = platformData.filter(p => 
+                    p.name.toLowerCase().includes(filters.searchTerm.toLowerCase())
+                );
+
+                return filtered.sort((a, b) => {
+                    switch (filters.sortBy) {
+                        case 'rating_desc':
+                            return b.rating - a.rating;
+                        case 'rating_asc':
+                            return a.rating - b.rating;
+                        case 'name_asc':
+                            return a.name.localeCompare(b.name);
+                        case 'name_desc':
+                            return b.name.localeCompare(a.name);
+                        default:
+                            return 0;
+                    }
+                });
+            }, [filters]);
+
+            return (
+                <div className="min-h-screen bg-gray-950 text-gray-50 p-4 sm:p-6 lg:p-8">
+                    <div className="max-w-7xl mx-auto">
+                        <header className="text-center my-6 sm:my-8 md:my-12">
+                            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white">Paid Focus Group Finder for 2025</h1>
+                             <div className="mt-4 text-base sm:text-lg text-gray-400">
+                                Showing <span className="text-2xl font-bold glowing-number">{filteredAndSortedPlatforms.length}</span> of <span className="font-bold text-white">{platformData.length}</span> platforms
+                            </div>
+                            <p className="mt-2 text-base sm:text-lg text-gray-400 max-w-2xl mx-auto">Discover the best platforms for high-paying research studies and focus groups.</p>
+                        </header>
+
+                        <main>
+                            <Filters filters={filters} setFilters={setFilters} />
+                            
+                            {filteredAndSortedPlatforms.length > 0 ? (
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                    {filteredAndSortedPlatforms.map(platform => (
+                                        <PlatformCard key={platform.id} platform={platform} />
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="text-center py-16 px-4 bg-gray-900 rounded-lg">
+                                    <h3 className="text-xl font-semibold text-white">No Platforms Found</h3>
+                                    <p className="text-gray-400 mt-2">Try adjusting your filters to find more results.</p>
+                                </div>
+                            )}
+                        </main>
+                        
+                        <footer className="text-center mt-12 py-6 border-t border-gray-800">
+                            <p className="text-sm text-gray-500">Pay rates and information are based on publicly available data and may change.</p>
+                        </footer>
+                    </div>
+                </div>
+            );
+        }
+
+        const container = document.getElementById('root');
+        const root = ReactDOM.createRoot(container);
+        root.render(<App />);
+    </script>
+</body>
+</html>

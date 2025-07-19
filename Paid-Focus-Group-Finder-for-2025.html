@@ -64,6 +64,13 @@
                 0 0 30px var(--glow-color),
                 0 0 40px var(--glow-color);
         }
+        .social-icon {
+            transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+        }
+        .social-icon:hover {
+            transform: scale(1.1);
+            opacity: 0.8;
+        }
     </style>
 </head>
 <body>
@@ -74,32 +81,6 @@
 
         // --- Data for the focus group platforms ---
         const platformData = [
-            {
-                id: 1,
-                name: 'User Interviews',
-                link: 'https://www.userinterviews.com/',
-                payRate: '$50 - $200+/hr',
-                rating: 4.5,
-                pros: ['Very high pay rates', 'Huge variety of interesting studies', 'Excellent platform and support', 'Remote and in-person options'],
-                cons: ['Can be very competitive to get selected', 'Requires filling out screener surveys'],
-                description: 'A top-tier platform for high-quality market research studies. Connects researchers with consumers and professionals for interviews, focus groups, and usability tests.',
-                studyTypes: ['1-on-1 Interviews', 'Focus Groups', 'Multi-day Studies', 'Unmoderated Tasks'],
-                payoutMethods: ['PayPal', 'Gift Cards'],
-                availability: ['US', 'Canada', 'UK', 'Australia', 'France', 'Germany', 'South Africa']
-            },
-            {
-                id: 2,
-                name: 'Respondent',
-                link: 'https://www.respondent.io/',
-                payRate: '$100 - $400+/hr',
-                rating: 4.2,
-                pros: ['Industry-leading pay, especially for professionals', 'High-quality professional studies', 'Clean and easy-to-use platform'],
-                cons: ['Primarily targets industry professionals', 'Extremely competitive to land studies'],
-                description: 'A premium platform focused on connecting researchers with industry professionals for high-paying, one-on-one remote research interviews.',
-                studyTypes: ['1-on-1 Interviews', 'Unmoderated Tasks'],
-                payoutMethods: ['PayPal'],
-                availability: ['Global']
-            },
             {
                 id: 3,
                 name: 'Prolific',
@@ -114,17 +95,17 @@
                 availability: ['Most OECD Countries']
             },
             {
-                id: 4,
-                name: 'Fieldwork',
-                link: 'https://www.fieldwork.com/',
-                payRate: '$75 - $200+ per study',
-                rating: 4.3,
-                pros: ['Long-standing and very reputable company', 'High-paying in-person studies', 'Professional facilities and staff'],
-                cons: ['In-person studies are limited to major US cities', 'Fewer remote opportunities than other sites'],
-                description: 'A veteran in the market research industry, specializing in high-paying, in-person focus groups in cities across the United States.',
-                studyTypes: ['In-person Focus Groups', 'Phone Interviews', 'Online Interviews'],
-                payoutMethods: ['Visa Gift Card', 'Check'],
-                availability: ['US']
+                id: 17,
+                name: 'CloudResearch (Connect)',
+                link: 'https://www.connect.cloudresearch.com/',
+                payRate: '$10 - $15/hr',
+                rating: 4.7,
+                pros: ['High-quality academic studies', 'You are never screened out', 'Fair and reliable pay', 'Excellent alternative to Prolific'],
+                cons: ['Fewer studies than some larger platforms', 'Primarily US-focused but expanding'],
+                description: 'A top-tier platform for academic research studies, often compared to Prolific for its high quality, fair pay, and respectful treatment of participants.',
+                studyTypes: ['Academic Surveys', 'Research Studies'],
+                payoutMethods: ['PayPal'],
+                availability: ['US & expanding']
             },
             {
                 id: 5,
@@ -140,43 +121,17 @@
                 availability: ['US', 'Canada', 'UK', 'France', 'Germany', 'Italy', 'Spain', 'Australia', 'New Zealand']
             },
             {
-                id: 6,
-                name: 'Wynter',
-                link: 'https://wynter.com/join-panel',
-                payRate: '$10 - $100 per test',
-                rating: 4.0,
-                pros: ['Great pay for very short tasks (10-20 min)', 'Niche focus on B2B feedback', 'Contribute to real product messaging'],
-                cons: ['Studies are less frequent', 'Very niche (B2B professionals)'],
-                description: 'A unique platform focused on B2B messaging and copy testing. Get paid well for providing quick feedback on websites and marketing materials.',
-                studyTypes: ['Messaging Tests', 'Copy Feedback', 'B2B Surveys'],
-                payoutMethods: ['PayPal'],
-                availability: ['US', 'Canada', 'UK', 'Europe']
-            },
-            {
-                id: 7,
-                name: 'Lightster',
-                link: 'https://www.lightster.co/',
-                payRate: 'Varies (Gift Cards)',
-                rating: 3.9,
-                pros: ['Modern app-based interface', 'Directly chat with brands and founders', 'Get early access to new products'],
-                cons: ['Payouts are often in gift cards, not cash', 'Newer platform, still growing'],
-                description: 'An app-based platform that connects you with brands for quick feedback sessions and product testing, often through short text chats.',
-                studyTypes: ['App-based Feedback', 'Brand Chats', 'Product Testing'],
-                payoutMethods: ['Gift Cards'],
-                availability: ['Global']
-            },
-            {
-                id: 8,
-                name: 'Maven',
-                link: 'https://maven.co/',
-                payRate: 'Varies (High Potential)',
-                rating: 4.1,
-                pros: ['Potential for very high pay based on expertise', 'Connect with top companies', 'Flexible micro-consulting'],
-                cons: ['Requires specific professional expertise', 'Not for general audiences or casual users'],
-                description: 'An expert network that connects professionals with companies for paid consultations. Pay is based on your professional experience and knowledge.',
-                studyTypes: ['Expert Consultations', 'Professional Surveys'],
-                payoutMethods: ['Direct Deposit'],
-                availability: ['Global']
+                id: 1,
+                name: 'User Interviews',
+                link: 'https://www.userinterviews.com/',
+                payRate: '$50 - $200+/hr',
+                rating: 4.5,
+                pros: ['Very high pay rates', 'Huge variety of interesting studies', 'Excellent platform and support', 'Remote and in-person options'],
+                cons: ['Can be very competitive to get selected', 'Requires filling out screener surveys'],
+                description: 'A top-tier platform for high-quality market research studies. Connects researchers with consumers and professionals for interviews, focus groups, and usability tests.',
+                studyTypes: ['1-on-1 Interviews', 'Focus Groups', 'Multi-day Studies', 'Unmoderated Tasks'],
+                payoutMethods: ['PayPal', 'Gift Cards'],
+                availability: ['US', 'Canada', 'UK', 'Australia', 'France', 'Germany', 'South Africa']
             },
             {
                 id: 9,
@@ -192,32 +147,6 @@
                 availability: ['US', 'Canada', 'Australia']
             },
             {
-                id: 10,
-                name: 'Ipsos i-Say',
-                link: 'https://www.ipsosisay.com/',
-                payRate: '$50 - $100 per study',
-                rating: 4.2,
-                pros: ['Owned by a massive research company', 'Trustworthy and reliable payouts', 'Global presence'],
-                cons: ['Focus group invites are rare', 'Primarily a survey panel'],
-                description: 'The survey panel for one of the world\'s largest market research firms. Active members may get invites to more in-depth studies.',
-                studyTypes: ['Surveys', 'Online Communities', 'Product Testing'],
-                payoutMethods: ['PayPal', 'Gift Cards'],
-                availability: ['Global']
-            },
-            {
-                id: 11,
-                name: 'FF Focus Group',
-                link: 'https://fffocusgroup.com/',
-                payRate: '$50 - $250 per study',
-                rating: 4.0,
-                pros: ['High-paying opportunities', 'Wide range of topics', 'Legitimate research firm'],
-                cons: ['Website is a bit dated', 'Requires signing up for their panel'],
-                description: 'A dedicated panel for recruiting participants for a wide variety of high-paying online and in-person focus groups.',
-                studyTypes: ['Focus Groups', 'Taste Tests', 'Shop-Alongs'],
-                payoutMethods: ['Check', 'Gift Cards'],
-                availability: ['US']
-            },
-            {
                 id: 12,
                 name: 'Focus Group by Sago',
                 link: 'https://www.sago.com/panels/',
@@ -231,17 +160,43 @@
                 availability: ['US', 'UK', 'Europe']
             },
             {
-                id: 13,
-                name: 'Focus Insite',
-                link: 'https://focusinsite.com/',
-                payRate: '$50 - $200 per study',
-                rating: 4.1,
-                pros: ['Recruits for a wide variety of studies', 'Good communication with participants', 'Reliable payouts'],
-                cons: ['Mainly US-focused', 'Website can be clunky'],
-                description: 'A US-based recruitment firm that connects participants with researchers for paid focus groups, interviews, and product tests.',
-                studyTypes: ['Focus Groups', 'Product Testing', 'Medical Interviews'],
-                payoutMethods: ['Check', 'Gift Cards'],
+                id: 4,
+                name: 'Fieldwork',
+                link: 'https://www.fieldwork.com/',
+                payRate: '$75 - $200+ per study',
+                rating: 4.3,
+                pros: ['Long-standing and very reputable company', 'High-paying in-person studies', 'Professional facilities and staff'],
+                cons: ['In-person studies are limited to major US cities', 'Fewer remote opportunities than other sites'],
+                description: 'A veteran in the market research industry, specializing in high-paying, in-person focus groups in cities across the United States.',
+                studyTypes: ['In-person Focus Groups', 'Phone Interviews', 'Online Interviews'],
+                payoutMethods: ['Visa Gift Card', 'Check'],
                 availability: ['US']
+            },
+            {
+                id: 2,
+                name: 'Respondent',
+                link: 'https://www.respondent.io/',
+                payRate: '$100 - $400+/hr',
+                rating: 4.2,
+                pros: ['Industry-leading pay, especially for professionals', 'High-quality professional studies', 'Clean and easy-to-use platform'],
+                cons: ['Primarily targets industry professionals', 'Extremely competitive to land studies'],
+                description: 'A premium platform focused on connecting researchers with industry professionals for high-paying, one-on-one remote research interviews.',
+                studyTypes: ['1-on-1 Interviews', 'Unmoderated Tasks'],
+                payoutMethods: ['PayPal'],
+                availability: ['Global']
+            },
+            {
+                id: 10,
+                name: 'Ipsos i-Say',
+                link: 'https://www.ipsosisay.com/',
+                payRate: '$50 - $100 per study',
+                rating: 4.2,
+                pros: ['Owned by a massive research company', 'Trustworthy and reliable payouts', 'Global presence'],
+                cons: ['Focus group invites are rare', 'Primarily a survey panel'],
+                description: 'The survey panel for one of the world\'s largest market research firms. Active members may get invites to more in-depth studies.',
+                studyTypes: ['Surveys', 'Online Communities', 'Product Testing'],
+                payoutMethods: ['PayPal', 'Gift Cards'],
+                availability: ['Global']
             },
             {
                 id: 14,
@@ -257,6 +212,58 @@
                 availability: ['Global']
             },
             {
+                id: 8,
+                name: 'Maven',
+                link: 'https://maven.co/',
+                payRate: 'Varies (High Potential)',
+                rating: 4.1,
+                pros: ['Potential for very high pay based on expertise', 'Connect with top companies', 'Flexible micro-consulting'],
+                cons: ['Requires specific professional expertise', 'Not for general audiences or casual users'],
+                description: 'An expert network that connects professionals with companies for paid consultations. Pay is based on your professional experience and knowledge.',
+                studyTypes: ['Expert Consultations', 'Professional Surveys'],
+                payoutMethods: ['Direct Deposit'],
+                availability: ['Global (Professionals)']
+            },
+            {
+                id: 13,
+                name: 'Focus Insite',
+                link: 'https://focusinsite.com/',
+                payRate: '$50 - $200 per study',
+                rating: 4.1,
+                pros: ['Recruits for a wide variety of studies', 'Good communication with participants', 'Reliable payouts'],
+                cons: ['Mainly US-focused', 'Website can be clunky'],
+                description: 'A US-based recruitment firm that connects participants with researchers for paid focus groups, interviews, and product tests.',
+                studyTypes: ['Focus Groups', 'Product Testing', 'Medical Interviews'],
+                payoutMethods: ['Check', 'Gift Cards'],
+                availability: ['US']
+            },
+            {
+                id: 6,
+                name: 'Wynter',
+                link: 'https://wynter.com/join-panel',
+                payRate: '$10 - $100 per test',
+                rating: 4.0,
+                pros: ['Great pay for very short tasks (10-20 min)', 'Niche focus on B2B feedback', 'Contribute to real product messaging'],
+                cons: ['Studies are less frequent', 'Very niche (B2B professionals)'],
+                description: 'A unique platform focused on B2B messaging and copy testing. Get paid well for providing quick feedback on websites and marketing materials.',
+                studyTypes: ['Messaging Tests', 'Copy Feedback', 'B2B Surveys'],
+                payoutMethods: ['PayPal'],
+                availability: ['US', 'Canada', 'UK', 'Europe']
+            },
+            {
+                id: 11,
+                name: 'FF Focus Group',
+                link: 'https://fffocusgroup.com/',
+                payRate: '$50 - $250 per study',
+                rating: 4.0,
+                pros: ['High-paying opportunities', 'Wide range of topics', 'Legitimate research firm'],
+                cons: ['Website is a bit dated', 'Requires signing up for their panel'],
+                description: 'A dedicated panel for recruiting participants for a wide variety of high-paying online and in-person focus groups.',
+                studyTypes: ['Focus Groups', 'Taste Tests', 'Shop-Alongs'],
+                payoutMethods: ['Check', 'Gift Cards'],
+                availability: ['US']
+            },
+            {
                 id: 15,
                 name: 'Probe Market Research',
                 link: 'https://www.probemarketresearch.com/participate-in-a-study/',
@@ -268,6 +275,19 @@
                 studyTypes: ['Focus Groups', 'Interviews', 'Taste Tests'],
                 payoutMethods: ['Check', 'Gift Cards'],
                 availability: ['US']
+            },
+            {
+                id: 7,
+                name: 'Lightster',
+                link: 'https://www.lightster.co/',
+                payRate: 'Varies (Gift Cards)',
+                rating: 3.9,
+                pros: ['Modern app-based interface', 'Directly chat with brands and founders', 'Get early access to new products'],
+                cons: ['Payouts are often in gift cards, not cash', 'Newer platform, still growing'],
+                description: 'An app-based platform that connects you with brands for quick feedback sessions and product testing, often through short text chats.',
+                studyTypes: ['App-based Feedback', 'Brand Chats', 'Product Testing'],
+                payoutMethods: ['Gift Cards'],
+                availability: ['Global (App-based)']
             },
             {
                 id: 16,
@@ -300,6 +320,24 @@
         const XCircleIcon = ({ className }) => (
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className={className}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+        );
+        
+        const LightbulbIcon = ({ className }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.311a7.5 7.5 0 00-7.5 0c.065.21.145.421.24.632l.008.017a.25.25 0 00.416.016l.21-.419a.25.25 0 01.416 0l.21.419a.25.25 0 00.416 0l.21-.419a.25.25 0 01.416 0l.21.419a.25.25 0 00.416 0l.21-.419a.25.25 0 01.416 0l.21.419a.25.25 0 00.416 0l.24-.632a7.5 7.5 0 00-7.5-7.5zm-3.75 7.478a12.06 12.06 0 004.5 0" />
+            </svg>
+        );
+        
+        const WhatsAppIcon = ({ className }) => (
+            <svg className={className} role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                <path d="M12.06 0C5.4 0 0 5.4 0 12.06c0 3.48 1.44 6.6 3.78 8.82L2.52 24l3.3-1.26c2.16 1.38 4.68 2.22 7.26 2.22 6.66 0 12.06-5.4 12.06-12.06S18.72 0 12.06 0zm0 22.08c-2.46 0-4.8-.96-6.6-2.64l-.48-.48-4.86 1.86 1.92-4.74-.54-.48c-1.8-1.8-2.82-4.26-2.82-6.84 0-5.52 4.5-9.96 10.02-9.96 5.52 0 9.96 4.5 9.96 9.96s-4.44 9.96-10.02 9.96zm4.8-6.66c-.3-.18-1.8-.9-2.1-.96-.3-.12-.54-.18-.72.18-.18.3-.78.96-.96 1.14-.18.18-.36.24-.66.06-.3-.18-1.26-.48-2.4-1.5-.9-.78-1.5-1.74-1.68-2.04-.18-.3-.06-.48.12-.66.12-.12.3-.3.42-.48.12-.12.18-.3.24-.48.06-.18 0-.36-.06-.54-.06-.18-.72-1.74-.96-2.34-.24-.6-.48-.54-.66-.54-.18 0-.36-.06-.54-.06s-.48-.06-.72.18c-.24.24-.96.9-.96 2.22s1.02 2.58 1.14 2.76c.12.18 1.92 3 4.68 4.14 2.76 1.14 2.76.78 3.24.72.48-.06 1.8-.78 2.04-1.44s.24-.66.18-.84c-.12-.12-.3-.18-.6-.3z"/>
+            </svg>
+        );
+
+        const TelegramIcon = ({ className }) => (
+            <svg className={className} role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.17.91-.494 1.208-.857 1.23-.695.04-1.22-.43-1.864-.892-.424-.3-1.229-.794-1.895-1.228a.344.344 0 0 1-.15-.316c.003-.317.164-.63.483-.932.17-.16.354-.336.558-.514.41-.362.817-.728 1.02-1.128.074-.146.04-.33-.046-.46-.13-.192-.354-.136-.51.042-.178.194-1.264.9-1.832 1.28-.612.41-1.11.59-1.573.58-.534-.01-.974-.16-1.33-.312-1.024-.438-1.625-1.4-1.625-1.4-.048-.116-.1-.26-.1-.403.004-.14.05-.28.14-.41s.21-.26.3-.39c.23-.34.48-.69.75-1.02 1.01-1.25 1.8-2.01 2.4-2.54.76-.64 1.28-1.02 1.28-1.02.4-.3.79-.59 1.2-.59.09-.002.18 0 .26.02.3.08.43.3.46.62z"/>
             </svg>
         );
 
@@ -432,6 +470,33 @@
                 </div>
             );
         }
+        
+        // --- Tips Section ---
+        function TipsSection() {
+            const tips = [
+                { title: 'Complete Your Profile', description: 'Fully detailed profiles with demographics are more likely to be selected for studies. Keep yours updated.' },
+                { title: 'Be Honest and Detailed', description: 'Researchers value honest, thorough feedback. The more insight you provide, the more likely you are to be invited back.' },
+                { title: 'Check for Invites Often', description: 'High-paying studies fill up very quickly. Check your email and the platform dashboards frequently for new opportunities.' },
+                { title: 'Test Your Equipment', description: 'Before a live interview, always test your webcam and microphone to ensure everything is working perfectly.'}
+            ];
+
+            return (
+                <div className="mt-16">
+                    <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8 text-white">Tips for Focus Group Success</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        {tips.map(tip => (
+                            <div key={tip.title} className="bg-gray-900/50 border border-gray-800 rounded-lg p-6">
+                                <div className="flex items-center gap-3">
+                                    <LightbulbIcon className="w-6 h-6 text-yellow-400" />
+                                    <h3 className="text-lg font-semibold text-white">{tip.title}</h3>
+                                </div>
+                                <p className="mt-2 text-gray-400 text-sm">{tip.description}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        }
 
         // --- Main App Component ---
         function App() {
@@ -446,8 +511,8 @@
                     p.name.toLowerCase().includes(filters.searchTerm.toLowerCase())
                 );
 
-                if (filters.availability !== 'All') {
-                    filtered = filtered.filter(p => p.availability.includes(filters.availability) || p.availability.includes('Global'));
+                 if (filters.availability !== 'All') {
+                    filtered = filtered.filter(p => p.availability.includes(filters.availability) || p.availability.includes('Global') || p.availability.includes('Most OECD Countries'));
                 }
 
                 return filtered.sort((a, b) => {
@@ -492,10 +557,20 @@
                                     <p className="text-gray-400 mt-2">Try adjusting your filters to find more results.</p>
                                 </div>
                             )}
+                            
+                            <TipsSection />
                         </main>
                         
                         <footer className="text-center mt-12 py-6 border-t border-gray-800">
                             <p className="text-sm text-gray-500">Pay rates and information are based on publicly available data and may change.</p>
+                            <div className="mt-4 flex justify-center items-center gap-6">
+                                <a href="https://wa.me/254732747466" target="_blank" rel="noopener noreferrer" className="text-green-500 hover:text-green-400 social-icon">
+                                    <WhatsAppIcon className="w-8 h-8" />
+                                </a>
+                                <a href="https://t.me/Sammarkey4" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 social-icon">
+                                    <TelegramIcon className="w-8 h-8" />
+                                </a>
+                            </div>
                         </footer>
                     </div>
                 </div>
